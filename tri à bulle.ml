@@ -1,8 +1,10 @@
-#Tri à bulle / Bubblesort
-#Complexité en temps: Au mieux O(n), En moyenne O(n²) Au pire O(n²)
-#complexité en espace : O(1)
-#Entrée : une liste A
-#Sortie : A classée dans l'ordre croissant
+(*
+Tri à bulle / Bubblesort
+Complexité en temps: Au mieux O(n), En moyenne O(n²) Au pire O(n²)
+complexité en espace : O(1)
+Entrée : une liste A
+Sortie : A classée dans l'ordre croissant
+*)
 
 let bubbleSort tab =
 	let n = Array.length tab in
