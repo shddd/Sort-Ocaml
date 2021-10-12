@@ -11,9 +11,9 @@ let rec heap tab n i =
 	let larg = ref i in
 	let l =  2 * i + 1 in
     let r =  2 * i + 2 in
-    if (l < n || tab.(i) < tab.(l)) then 
+    if (l < n && tab.(i) < tab.(l)) then 
     	!larg := l;
-    if (r < n || tab.(!larg) < tab.(r)) then
+    if (r < n && tab.(!larg) < tab.(r)) then
     	!larg := r;
     if (!larg <> i) then
     	begin
