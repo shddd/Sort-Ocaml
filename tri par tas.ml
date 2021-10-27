@@ -1,43 +1,49 @@
 (*
 Tri par tas / heapsort
-Complexité en temps:Au mieux O(n), En moyenne O(n log n) Au pire O(n log n)
-Complexité en espace : Au pire O(1)
+Complexité en temps:Au mieux O(n) En moyenne O(n log n) Au pire O(n log n)
+Complexité en espace : O(1)
 Entrée : une liste A
-Sortie : A classée dans l'ordre croissant 
-*)
-(* ALPHA *)
+Sortie : A classée dans l'ordre croissant*)
 
-let rec heap tab n i = 
-	let larg = ref i in
-	let l =  2 * i + 1 in
-    let r =  2 * i + 2 in
-    if (l < n && tab.(i) < tab.(l)) then 
-    	!larg := l;
-    if (r < n && tab.(!larg) < tab.(r)) then
-    	!larg := r;
-    if (!larg <> i) then
-    	begin
-    		let a = tab.(i) in
-        	let b = tab.(!larg) in
-        	tab.(i) <- b;
-        	tab.(!larg) <- a;
-        	heap tab n !larg
-        end;
-     tab;;
-    
+let parent i = (i - 1) / 2;;
+let enfant_gauche i = 2 * i + 1 ;;
+let enfant_droite i = 2 * i + 2;;
 
+let permuter a i j = 
+  let tmp = a.(i) in
+    a.(i) <- a.(j);
+    a.(j) <- tmp;;
 
-let heapsort tab =
-	let n = Array.length tab in
-    for i = n/2 downto -1 do
-    	heap tab n i;
-        done;
-    for i = n-1 downto 0 do
-    	let a = tab.(i) in
-        let b = tab.(0) in
-        tab.(i) <- b;
-        tab.(0) <- a;
-    	heap tab i 0;
-    	done;
-    tab;;
+let rec entasser_tas a taille i =
+  let gauche = enfant_gauche i in
+  let droite = enfant_droite i in
+  let max = ref 0 in
+    if gauche <= taille - 1 && a.(gauche) > a.(i)
+    then max := gauche
+    else max := i;
+
+    if droite <= taille - 1 && a.(droite) > a.(!max)
+      then max := droite;
+
+    if !max <> i then begin permuter a i !max; 
+      entasser_tas a taille !max;
+    end;;
     	
+let creer_tas a taille = 
+for i = taille/2 downto 0 
+ do
+        entasser_tas a taille i
+ done;;
+
+let creer_tas a taille = 
+	for i = taille/2 downto 0 do
+        entasser_tas a taille i
+ done;;
+
+let tri_par_tas a  = 
+	let taille = Array.length a in
+  creer_tas a taille;    
+  for i = taille-1 downto 1 do   
+    permuter a 0 i;   
+    entasser_tas a i 0;      
+  done;;	
